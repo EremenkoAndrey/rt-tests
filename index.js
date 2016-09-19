@@ -121,24 +121,23 @@ function clear() {
         var dirName = config.resultDir;
         fs.readdir(dirName, function (err, fileNames) {
             if(err) {
-                throw new Error('Dont cleared the log directory')
-            }
-            var callback = function () {
-                console.log('Директория логов очищена');
-            };
-            async.each(fileNames, function (filename, callback) {
-                var path = dirName + filename;
-                fs.unlink(path, function(err){
-                    if(err) {
-                        console.log(colors.red('File' + path + 'is not deleted'));
-                        reject();
-                    }
-                    callback();
-                });
-            }, function () {
-                console.log('Директория логов очищена');
+                console.log('Log directory is not cleared');
                 resolve();
-            });
+            } else {
+                async.each(fileNames, function (filename, callback) {
+                    var path = dirName + filename;
+                    fs.unlink(path, function(err){
+                        if(err) {
+                            console.log(colors.red('File' + path + 'is not deleted'));
+                            reject();
+                        }
+                        callback();
+                    });
+                }, function () {
+                    console.log('Директория логов очищена');
+                    resolve();
+                });
+            }
         });
 
     });
