@@ -1,0 +1,13 @@
+@import url(font-awesome/css/font-awesome.min.css);
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.wait {
+  font-size: 50px;
+}

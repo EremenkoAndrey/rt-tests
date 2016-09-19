@@ -1,0 +1,59 @@
+{% if status == 'process' %}
+    {% set title = 'Проверка запущена' %}
+{% elseif status == 'fulfilled' %}
+    {% set title = 'Проверка успешно завершена' %}
+{% elseif status == 'rejected' %}
+    {% set title = 'Проверка завершена с ошибками' %}
+{% else %}
+    {% set title = 'Проверка сайта' %}
+{% endif %}
+
+{% extends "layout.nunj" %}
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+            <div class="page-header">
+                <h1>{{ title }}</h1>
+            </div>
+
+            {% if status == 'pending' %}
+                <form method="POST" action="/?test=true">
+
+                    <div class="form-group">
+                        <label for="pathUrl">Проверяемый адрес:</label>
+                        <input type="text" class="form-control" name="url" placeholder="УРЛ-адрес страницы">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pathUrl">Искать ключевые слова:</label>
+                        <input type="text" class="form-control" name="keywords" placeholder="Список слов, разделенных запятой (также поддерживаются регулярки)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pathUrl">Количество страниц:</label>
+                        <input type="text" class="form-control" name="count" value="100" style="width: 100px">
+                    </div>
+
+                    <button type="submit" class="btn btn-default btn-info">Запустить тестирование</button>
+                </form>
+
+            {% endif %}
+
+            {% if status == 'process' %}
+                <div class="wait">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                </div>
+            {% endif %}
+
+            {% if status == 'fulfilled' %}
+                <form method="POST">
+                    <input type="hidden" name="clear" value="true">
+                    <button type="submit" class="btn btn-default btn-danger">Удалить предыдущие результаты</button>
+                </form>
+            {% endif %}
+
+        </div>
+
+    </div>
+{% endblock %}
