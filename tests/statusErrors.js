@@ -6,12 +6,13 @@ function writeToFile(response) {
 
     try {
         const fs = require('fs'),
-            pathForPages = './logs/pages404.txt',
+            pathForPages = './logs/errors-pages.txt',
             pathForResources = './logs/resources404.txt';
 
-        if(this.url === response.url && response.status === 404) {
+        if( this.url === response.url &&
+            (response.status === 404 || response.status === 500) ) {
             var stream = fs.open(pathForPages, 'a+');
-            stream.write('URL: ' + this.url + ' \n \n');
+            stream.write('Error ' + response.status + ' - URL: ' + this.url + ' \n \n');
             stream.close();
         } else if (this.url && response.status === 404) {
             var stream = fs.open(pathForResources, 'a+');

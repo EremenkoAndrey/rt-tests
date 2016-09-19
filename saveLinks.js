@@ -8,7 +8,7 @@ function saveLinks(jsonWithLinks) {
         if (err) {
             console.log('Проверка завершена успешно, файл ' + filename + ' не создан');
         } else {
-            console.log('Проверка завершена успешно, создан файл ' + filename + ' со списком проверенных УРЛов');
+            console.log('Проверка завершена успешно, создан файл ' + filename + ' со списком найденных УРЛов');
         }
 
     });

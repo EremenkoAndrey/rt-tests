@@ -9,8 +9,9 @@ const urlParser = require('url');
 
 const saveLinks = require('./saveLinks');
 const jsErrors = require('./tests/jsErrors');
-const resource404 = require('./tests/404');
+const statusErrors = require('./tests/statusErrors');
 const keywords = require('./tests/keywords');
+const twigErrors = require('./tests/twigErrors');
 
 var links = [],
     maxCount,
@@ -38,9 +39,10 @@ function tests(post, callback) {
         tests = {
             beforeOpen: function (page) {
                 jsErrors(page);
-                resource404(page);
+                statusErrors(page);
             },
             afterOpen: function (content, url) {
+                twigErrors(content, url);
                 keywords(content, post.keywords, url);
             }
         };
@@ -121,7 +123,7 @@ function clear() {
         var dirName = config.resultDir;
         fs.readdir(dirName, function (err, fileNames) {
             if(err) {
-                console.log('Log directory is not cleared');
+                console.log('Директория с логами не найдена');
                 resolve();
             } else {
                 async.each(fileNames, function (filename, callback) {

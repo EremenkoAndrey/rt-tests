@@ -2,12 +2,11 @@ const fs = require('fs');
 
 function keywordsSearch(content, keywords, url) {
     if(!keywords) return;
-
+    var filename = './logs/keywords.txt';
     var arrKeywords = keywords.split(',');
 
     arrKeywords.forEach(function(item) {
         var word = item.trim(),
-            filename = './logs/keywords.txt',
             string = '';
 
         if(findKey(word)) {
