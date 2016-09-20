@@ -41,6 +41,26 @@
             {% endif %}
 
             {% if status == 'process' %}
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                <script>
+                    var interval = setInterval(ajax, 2000);
+                    function ajax() {
+                        var res = $.ajax({
+                            type: 'POST',
+                            url: '/',
+                            data: {
+                                ajax_post: true
+                            }
+                        });
+                        res.done(function (data) {
+                            if(data === 'fulfilled') {
+                                clearInterval(interval);
+                                window.location = window.location;
+                            }
+                        })
+                    }
+
+                </script>
                 <div class="wait">
                     <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
                 </div>

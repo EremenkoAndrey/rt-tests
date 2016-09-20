@@ -12,13 +12,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-
   if(req.body.clear) {
     tests.clear().then(function () {
       status = 'pending';
-      res.render('index', { status: status });
+      res.render('index', {status: status});
     })
-
+  } else if(req.body.ajax_post) {
+    res.send(status);
+    res.end();
   } else {
 
     status = 'process';
